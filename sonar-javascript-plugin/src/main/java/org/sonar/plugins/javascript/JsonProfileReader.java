@@ -32,7 +32,7 @@ public class JsonProfileReader {
   }
 
   public static Set<String> ruleKeys(String pathToFile) {
-    URL profileUrl = JsonProfileReader.class.getResource(pathToFile);
+    URL profileUrl = JsonProfileReader.class.getClassLoader().getResource(pathToFile);
     try {
       Gson gson = new Gson();
       return gson.fromJson(Resources.toString(profileUrl, Charsets.UTF_8), Profile.class).ruleKeys;
