@@ -63,7 +63,7 @@ public class EslintReportSensor implements Sensor {
     reportFiles.forEach(report -> importReport(report, context));
   }
 
-  private void importReport(File report, SensorContext context) {
+  private static void importReport(File report, SensorContext context) {
     LOG.info("Importing {}", report.getAbsoluteFile());
 
     try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(report), StandardCharsets.UTF_8)) {
@@ -83,7 +83,7 @@ public class EslintReportSensor implements Sensor {
   }
 
 
-  private void saveEslintError(SensorContext context, EslintError eslintError, InputFile inputFile) {
+  private static void saveEslintError(SensorContext context, EslintError eslintError, InputFile inputFile) {
     String eslintKey = eslintError.ruleId;
     if (eslintKey == null) {
       LOG.warn("Parse error issue from ESLint will not be imported, file " + inputFile.uri());
@@ -121,7 +121,7 @@ public class EslintReportSensor implements Sensor {
     }
   }
 
-  private InputFile getInputFile(SensorContext context, String fileName) {
+  private static InputFile getInputFile(SensorContext context, String fileName) {
     FilePredicates predicates = context.fileSystem().predicates();
     InputFile inputFile = context.fileSystem().inputFile(predicates.or(predicates.hasRelativePath(fileName), predicates.hasAbsolutePath(fileName)));
     if (inputFile == null) {
