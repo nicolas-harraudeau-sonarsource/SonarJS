@@ -28,16 +28,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EslintRulesDefinitionTest {
 
   @Test
-  public void should_not_create_repo_when_external_not_supported() {
-    EslintRulesDefinition eslintRulesDefinition = new EslintRulesDefinition(false);
-    RulesDefinition.Context context = new RulesDefinition.Context();
-    eslintRulesDefinition.define(context);
-    assertThat(context.repositories()).isEmpty();
-  }
-
-  @Test
-  public void should_create_external_repo_when_external_supported() {
-    EslintRulesDefinition eslintRulesDefinition = new EslintRulesDefinition(true);
+  public void should_create_external_repo() {
+    EslintRulesDefinition eslintRulesDefinition = new EslintRulesDefinition();
     RulesDefinition.Context context = new RulesDefinition.Context();
     eslintRulesDefinition.define(context);
     assertThat(context.repositories()).hasSize(1);

@@ -54,16 +54,19 @@ public class EslintRulesDefinition implements RulesDefinition {
       JavaScriptLanguage.KEY)));
   }
 
-  private boolean externalIssuesSupported;
-
-  public EslintRulesDefinition(boolean externalIssuesSupported) {
-    this.externalIssuesSupported = externalIssuesSupported;
-  }
-
   @Override
   public void define(Context context) {
-    if (externalIssuesSupported) {
-      RULE_LOADERS.forEach((s, externalRuleLoader) -> externalRuleLoader.createExternalRuleRepository(context));
+    RULE_LOADERS.forEach((s, externalRuleLoader) -> externalRuleLoader.createExternalRuleRepository(context));
+  }
+
+  public static ExternalRuleLoader loader(String eslintKey) {
+    if (eslintKey.contains("/")) {
+      String pluginName = eslintKey.split("/")[0];
+      if (RULE_LOADERS.containsKey(pluginName)) {
+        return RULE_LOADERS.get(pluginName);
+      }
     }
+
+    return RULE_LOADERS.get("core");
   }
 }
